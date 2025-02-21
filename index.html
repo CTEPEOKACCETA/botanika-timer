@@ -3,24 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Таймер</title>
+    <title>Таймер до 10 мая 2025</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f4f4f4;
+            background-color: #2c3e50; /* Темно-синий фон */
+            color: #ecf0f1; /* Белый текст */
             margin: 0;
             padding: 0;
         }
         h1 {
             font-size: 3em;
-            color: #333;
             margin-top: 20px;
+            color: #e74c3c; /* Красный цвет для заголовка */
         }
         #timer {
             font-size: 2em;
-            color: #555;
             margin-top: 20px;
+            display: block; /* Таймер на отдельной строке */
+            color: #f1c40f; /* Жёлтый цвет для таймера */
+        }
+        .checkbox-container {
+            margin-top: 30px;
+        }
+        .checkbox-container label {
+            display: block;
+            margin: 10px auto;
+            font-size: 1.2em;
+            color: #ecf0f1;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #bdc3c7;
         }
     </style>
 </head>
@@ -28,35 +47,57 @@
     <h1>БОТАНИКА ЕПТА</h1>
     <div id="timer">Загрузка таймера...</div>
 
+    <div class="checkbox-container">
+        <label><input type="checkbox" id="task1"> Гриша Идет</label>
+        <label><input type="checkbox" id="task2"> Антон Идет</label>
+        <label><input type="checkbox" id="task3"> Азат Идет</label>
+        <label><input type="checkbox" id="task4"> Игорь Идет</label>
+    </div>
+
+    <footer>
+        &copy; 2023 Ботаника Епта. Все права защищены.
+    </footer>
+
     <script>
         // Устанавливаем целевую дату (10 мая 2025 года)
         const targetDate = new Date('May 10, 2025 00:00:00').getTime();
 
         // Обновляем таймер каждую секунду
         const timerInterval = setInterval(() => {
-            // Получаем текущее время
             const now = new Date().getTime();
-
-            // Вычисляем разницу между целевой датой и текущим временем
             const timeDifference = targetDate - now;
 
-            // Проверяем, не истек ли таймер
             if (timeDifference <= 0) {
                 clearInterval(timerInterval);
                 document.getElementById('timer').innerHTML = 'Время истекло!';
                 return;
             }
 
-            // Вычисляем дни, часы, минуты и секунды
             const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-            // Отображаем таймер на странице
             document.getElementById('timer').innerHTML = 
-                `До алкогольного отравления: ${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
+                `Алкогольного отравления: ${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
         }, 1000);
+
+        // Сохранение состояния чекбоксов в localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                // Восстановление состояния из localStorage
+                const savedState = localStorage.getItem(checkbox.id);
+                if (savedState === 'true') {
+                    checkbox.checked = true;
+                }
+
+                // Сохранение состояния при изменении
+                checkbox.addEventListener('change', () => {
+                    localStorage.setItem(checkbox.id, checkbox.checked);
+                });
+            });
+        });
     </script>
 </body>
 </html>
