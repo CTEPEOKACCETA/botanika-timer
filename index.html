@@ -97,7 +97,7 @@
     <div id="explosion" class="explosion" style="display: none;"></div>
 
     <!-- Текст после взрыва -->
-    <div id="waitMessage" class="wait-message">Тогда жди <span id="timerCopy"></span>!</div>
+    <div id="waitMessage" class="wait-message">Тогда жди: <span id="timerCopy"></span>!</div>
 
     <footer>
         &copy; 2025 Ботаника Епта. Все права защищены.
@@ -114,7 +114,7 @@
 
             if (timeDifference <= 0) {
                 clearInterval(timerInterval);
-                document.getElementById('timer').innerHTML = 'Время бухать пришло ЁПТА!';
+                document.getElementById('timer').innerHTML = 'ЧЕГО ты ждёшь?? Время бухать пришло ЁПТА!';
                 return;
             }
 
