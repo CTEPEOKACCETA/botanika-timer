@@ -47,6 +47,36 @@
             font-size: 0.9em;
             color: #bdc3c7;
         }
+
+        /* Анимация взрыва */
+        .explosion {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            background: radial-gradient(circle, #ff4d4d, transparent);
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(5);
+                opacity: 0;
+            }
+        }
+
+        /* Текст после взрыва */
+        .wait-message {
+            font-size: 1.5em;
+            color: #f1c40f;
+            margin-top: 20px;
+            display: none; /* Сначала скрыт */
+        }
     </style>
 </head>
 <body>
@@ -58,11 +88,16 @@
     </div>
 
     <div class="checkbox-container">
-        <label><input type="checkbox" id="task1"> Гриша готов??</label>
-        <label><input type="checkbox" id="task2"> Витя готов??</label>
-        <label><input type="checkbox" id="task3"> Антон готов??</label>
-        <label><input type="checkbox" id="task4"> Азат готов??</label>
+        <label>
+            <input type="checkbox" id="readyCheckbox"> ГОТОВ??
+        </label>
     </div>
+
+    <!-- Анимация взрыва -->
+    <div id="explosion" class="explosion" style="display: none;"></div>
+
+    <!-- Текст после взрыва -->
+    <div id="waitMessage" class="wait-message">Тогда жди <span id="timerCopy"></span>!</div>
 
     <footer>
         &copy; 2025 Ботаника Епта. Все права защищены.
@@ -79,7 +114,7 @@
 
             if (timeDifference <= 0) {
                 clearInterval(timerInterval);
-                document.getElementById('timer').innerHTML = 'Время истекло! Пора бухать епта';
+                document.getElementById('timer').innerHTML = 'Время бухать пришло ЁПТА!';
                 return;
             }
 
@@ -88,25 +123,30 @@
             const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-            document.getElementById('timer').innerHTML = 
-                `${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
+            const timerText = `${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
+            document.getElementById('timer').innerHTML = timerText;
+            document.getElementById('timerCopy').innerHTML = timerText; // Копируем текст таймера
         }, 1000);
 
-        // Сохранение состояния чекбоксов в localStorage
-        document.addEventListener('DOMContentLoaded', () => {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
-                // Восстановление состояния из localStorage
-                const savedState = localStorage.getItem(checkbox.id);
-                if (savedState === 'true') {
-                    checkbox.checked = true;
-                }
+        // Логика для чекбокса "ГОТОВ??"
+        document.getElementById('readyCheckbox').addEventListener('change', (event) => {
+            if (event.target.checked) {
+                // Показываем анимацию взрыва
+                const explosion = document.getElementById('explosion');
+                explosion.style.display = 'block';
 
-                // Сохранение состояния при изменении
-                checkbox.addEventListener('change', () => {
-                    localStorage.setItem(checkbox.id, checkbox.checked);
-                });
-            });
+                // Скрываем анимацию через 1 секунду
+                setTimeout(() => {
+                    explosion.style.display = 'none';
+                }, 1000);
+
+                // Показываем текст "Тогда жди <Таймер>!"
+                const waitMessage = document.getElementById('waitMessage');
+                waitMessage.style.display = 'block';
+            } else {
+                // Если чекбокс снят, скрываем текст
+                document.getElementById('waitMessage').style.display = 'none';
+            }
         });
     </script>
 </body>
