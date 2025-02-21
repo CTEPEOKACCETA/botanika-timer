@@ -18,11 +18,17 @@
             margin-top: 20px;
             color: #e74c3c; /* Красный цвет для заголовка */
         }
+        .timer-container {
+            margin-top: 20px;
+        }
+        .timer-label {
+            font-size: 1.5em;
+            display: block; /* Текст на отдельной строке */
+        }
         #timer {
             font-size: 2em;
-            margin-top: 20px;
-            display: block; /* Таймер на отдельной строке */
             color: #f1c40f; /* Жёлтый цвет для таймера */
+            display: block; /* Таймер на новой строке */
         }
         .checkbox-container {
             margin-top: 30px;
@@ -45,13 +51,17 @@
 </head>
 <body>
     <h1>БОТАНИКА ЕПТА</h1>
-    <div id="timer">Загрузка таймера...</div>
+
+    <div class="timer-container">
+        <span class="timer-label">До алкогольного отравления осталось:</span>
+        <div id="timer">Загрузка таймера...</div>
+    </div>
 
     <div class="checkbox-container">
-        <label><input type="checkbox" id="task1"> Гриша Идет</label>
-        <label><input type="checkbox" id="task2"> Антон Идет</label>
-        <label><input type="checkbox" id="task3"> Азат Идет</label>
-        <label><input type="checkbox" id="task4"> Игорь Идет</label>
+        <label><input type="checkbox" id="task1"> Гриша готов??</label>
+        <label><input type="checkbox" id="task2"> Витя готов??</label>
+        <label><input type="checkbox" id="task3"> Антон готов??</label>
+        <label><input type="checkbox" id="task4"> Азат готов??</label>
     </div>
 
     <footer>
@@ -69,7 +79,7 @@
 
             if (timeDifference <= 0) {
                 clearInterval(timerInterval);
-                document.getElementById('timer').innerHTML = 'Время истекло!';
+                document.getElementById('timer').innerHTML = 'Время истекло! Пора бухать епта';
                 return;
             }
 
@@ -79,7 +89,7 @@
             const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
             document.getElementById('timer').innerHTML = 
-                `Алкогольного отравления: ${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
+                `${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
         }, 1000);
 
         // Сохранение состояния чекбоксов в localStorage
