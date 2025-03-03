@@ -77,6 +77,13 @@
             margin-top: 20px;
             display: none; /* Сначала скрыт */
         }
+
+        /* Стиль для iframe */
+        iframe {
+            margin-top: 20px;
+            border: 2px solid #f1c40f;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -98,6 +105,17 @@
 
     <!-- Текст после взрыва -->
     <div id="waitMessage" class="wait-message">Тогда жди: <span id="timerCopy"></span>!</div>
+
+    <!-- Игра -->
+    <div style="margin-top: 50px;">
+        <h2>А пока ждёшь, можешь развлечься</h2>
+        <iframe 
+            src="game/index.html" 
+            width="960" 
+            height="600" 
+            frameborder="0">
+        </iframe>
+    </div>
 
     <footer>
         &copy; 2025 Ботаника Епта. Все права защищены.
